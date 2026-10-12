@@ -2,7 +2,7 @@
 <odoo noupdate="1">
     <function
         model="ir.config_parameter"
-        name="set_param"
+        name="set_str"
         eval="('google.maps_libraries', 'geometry,places')"
     />
 </odoo>

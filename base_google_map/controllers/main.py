@@ -9,7 +9,7 @@ class Main(http.Controller):
     @http.route("/web/map_theme", type="jsonrpc", auth="user")
     def map_theme(self):
         icp = http.request.env["ir.config_parameter"].sudo()
-        theme = icp.get_param("google.maps_theme", default="default")
+        theme = icp.get_str("google.maps_theme", default="default")
         return {"theme": theme}
 
     @http.route("/web/google_autocomplete_conf", type="jsonrpc", auth="user")

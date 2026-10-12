@@ -5,6 +5,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestResConfigSettings(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -31,11 +33,11 @@ class TestResConfigSettings(BaseCommon):
             }
         )
         settings.set_values()
-        self.assertEqual(self.ICP.get_param("google.api_key_geocode"), "test-api-key")
-        self.assertEqual(self.ICP.get_param("google.lang_localization"), "&language=en")
-        self.assertEqual(self.ICP.get_param("google.region_localization"), "&region=US")
-        self.assertEqual(self.ICP.get_param("google.maps_theme"), "night")
-        self.assertEqual(self.ICP.get_param("google.maps_libraries"), "geometry,places")
+        self.assertEqual(self.ICP.get_str("google.api_key_geocode"), "test-api-key")
+        self.assertEqual(self.ICP.get_str("google.lang_localization"), "&language=en")
+        self.assertEqual(self.ICP.get_str("google.region_localization"), "&region=US")
+        self.assertEqual(self.ICP.get_str("google.maps_theme"), "night")
+        self.assertEqual(self.ICP.get_str("google.maps_libraries"), "geometry,places")
         values = self.Settings.get_values()
         self.assertEqual(values["google_maps_view_api_key"], "test-api-key")
         self.assertEqual(values["google_maps_lang_localization"], "en")
@@ -56,9 +58,9 @@ class TestResConfigSettings(BaseCommon):
             }
         )
         settings.set_values()
-        self.assertFalse(self.ICP.get_param("google.lang_localization"))
-        self.assertFalse(self.ICP.get_param("google.region_localization"))
-        self.assertEqual(self.ICP.get_param("google.maps_libraries"), ",")
+        self.assertFalse(self.ICP.get_str("google.lang_localization"))
+        self.assertFalse(self.ICP.get_str("google.region_localization"))
+        self.assertEqual(self.ICP.get_str("google.maps_libraries"), ",")
         values = self.Settings.get_values()
         self.assertFalse(values["google_maps_lang_localization"])
         self.assertFalse(values["google_maps_region_localization"])
@@ -90,9 +92,9 @@ class TestResConfigSettings(BaseCommon):
         self.assertEqual(settings._set_google_maps_region_localization(), "&region=IT")
         self.assertEqual(settings._set_google_maps_places(), "places")
         self.assertEqual(settings._set_google_maps_geometry(), "")
-        self.ICP.set_param("google.lang_localization", "")
-        self.ICP.set_param("google.region_localization", "")
-        self.ICP.set_param("google.maps_libraries", "")
+        self.ICP.set_str("google.lang_localization", "")
+        self.ICP.set_str("google.region_localization", "")
+        self.ICP.set_str("google.maps_libraries", "")
         self.assertEqual(self.Settings._get_google_maps_lang_localization(), "")
         self.assertEqual(self.Settings._get_google_maps_region_localization(), "")
         self.assertFalse(self.Settings._get_google_maps_places())
